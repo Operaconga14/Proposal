@@ -1,0 +1,2 @@
+# Proposal
+Proposal Smart Contract
