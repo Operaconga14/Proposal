@@ -2,7 +2,7 @@
 pragma solidity ^0.8.19;
 
 contract ProposalContract {
-    
+    uint256 private counter;
     struct Proposal {
         string title;
         string description;
@@ -15,4 +15,9 @@ contract ProposalContract {
     }
 
     mapping (uint256 => Proposal) proposal_history;
+
+    function create(string calldata _title, string calldata _description, uint256 _total_vote_end) external {
+        counter += 1;
+        proposal_history[counter] = Proposal(_title, _description, 0, 0, 0, _total_vote_end, false, true);
+    }
 }
