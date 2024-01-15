@@ -66,6 +66,10 @@ contract ProposalContract {
         uint256 reject = proposal.reject;
         uint256 pass = proposal.pass;
 
+        if (proposal.pass %2 == 1) {
+            pass +=1;
+        }
+
         if (approve > reject || pass > reject) {
             return true;
         } else {
@@ -102,5 +106,27 @@ contract ProposalContract {
             proposal.is_active = false;
             voted_addresses = [owner];
         }
+    }
+
+    function terminateProposal() external onlyOwner active {
+        proposal_history[counter].is_active = false;
+    }
+
+    function isVoted(address _address) public view returns (bool) {
+        for (uint i = 0; i < voted_addresses.length; i++) {
+            if (voted_addresses[i] == _address) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function getCurrentProposal() external view returns (Proposal memory) {
+        return proposal_history[counter];
+    }
+
+    function getProposal(uint256 number) external view returns (Proposal memory) {
+        return proposal_history[number];
     }
 }
